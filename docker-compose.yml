@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: salary_management
+      POSTGRES_USER: salary
+      POSTGRES_PASSWORD: salary
+    ports:
+      - "5432:5432"
+    volumes:
+      - salary-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U salary -d salary_management"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+volumes:
+  salary-data:
